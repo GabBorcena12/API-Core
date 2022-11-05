@@ -1,6 +1,6 @@
 ﻿using API_Core.DBContext;
 using API_Core.Interface;
-using API_Core.Model;
+using API_Core.Model.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_Core.Controllers
@@ -8,11 +8,11 @@ namespace API_Core.Controllers
     [ApiController]
     public class DestinationController : ControllerBase
     {
-        private iDestination _iDestination;
+        private IDestination _iDestination;
 
         private readonly TicketDbContext _db;
 
-        public DestinationController(TicketDbContext db, iDestination iDestination)
+        public DestinationController(TicketDbContext db, IDestination iDestination)
         {
             _db = db;
             _iDestination = iDestination;

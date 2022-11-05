@@ -1,19 +1,14 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API_Core.Model
+namespace API_Core.Model.Data_Transfer_Objects
 {
-    public class Ticket
+    public abstract class BaseTicketDto
     {
-        [Key]
-        [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         public string Description { get; set; }
         public int? TotalSeats { get; set; }
         public int? AvailableSeats { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? StreamingDateTime { get; set; }
     }
+
 }

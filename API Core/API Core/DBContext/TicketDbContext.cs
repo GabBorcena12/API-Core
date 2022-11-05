@@ -1,10 +1,12 @@
-﻿using API_Core.Model;
+﻿using API_Core.Data;
+using API_Core.Model.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Transactions;
 
 namespace API_Core.DBContext
 {
-    public class TicketDbContext: DbContext
+    public class TicketDbContext: IdentityDbContext<ApiUser>
     {
         public TicketDbContext(DbContextOptions<TicketDbContext> options)
             : base(options)
@@ -17,5 +19,10 @@ namespace API_Core.DBContext
         public DbSet<TicketPrice> tblTicketPrice { get; set; }
         public DbSet<TouristDestination> tblTouristDestinations { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new RoleConfiguration());
+        }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using API_Core.DBContext;
+using API_Core.Interface;
 using API_Core.Model;
 using System.Linq;
 
-namespace API_Core.Interface
+namespace API_Core.Repository
 {
     public class SeatData : ISeat
     {
@@ -21,19 +22,21 @@ namespace API_Core.Interface
                 var trans = _db.tblTransaction.Where(x => x.SeatId == id).Sum(x => x.AcquiredSeats);
                 var available = seat.Capacity - trans;
 
-                if ((forUpdate == false && available >= toAvailQty) ||  
-                (forUpdate == true && available <= 0 && query.AcquiredSeats >= toAvailQty) ||
-                (forUpdate == true && available > 0 && (trans - query.AcquiredSeats) >= toAvailQty))
+                if (forUpdate == false && available >= toAvailQty ||
+                forUpdate == true && available <= 0 && query.AcquiredSeats >= toAvailQty ||
+                forUpdate == true && available > 0 && trans - query.AcquiredSeats >= toAvailQty)
                 {
                     return 1;
                 }
-                else {
+                else
+                {
                     return 0;
                 }
             }
-            else {
+            else
+            {
                 return 0;
-            } 
+            }
         }
     }
 }

@@ -1,12 +1,13 @@
 ﻿using API_Core.DBContext;
-using API_Core.Model;
+using API_Core.Interface;
+using API_Core.Model.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace API_Core.Interface
+namespace API_Core.Repository
 {
-    public class Destination : iDestination
+    public class Destination : IDestination
     {
         private TicketDbContext _db;
         public Destination(TicketDbContext db)
@@ -45,12 +46,12 @@ namespace API_Core.Interface
                     TouristDestination insertModel = new TouristDestination();
 
                     insertModel.Id = model.Id;
-                    insertModel.Label = modelUpdate.Label; 
-                    insertModel.Description = modelUpdate.Description;  
-                    insertModel.ImagePath = modelUpdate.ImagePath;  
-                    insertModel.URLPath = modelUpdate.URLPath;  
+                    insertModel.Label = modelUpdate.Label;
+                    insertModel.Description = modelUpdate.Description;
+                    insertModel.ImagePath = modelUpdate.ImagePath;
+                    insertModel.URLPath = modelUpdate.URLPath;
 
-                    _db.Entry<TouristDestination>(modelUpdate).State = EntityState.Detached;
+                    _db.Entry(modelUpdate).State = EntityState.Detached;
                     _db.tblTouristDestinations.Update(insertModel);
                     _db.SaveChanges();
                     return model.Id;

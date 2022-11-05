@@ -1,7 +1,7 @@
 ﻿using API_Core.DBContext;
-using API_Core.Model;
 using Microsoft.AspNetCore.Mvc;
 using API_Core.Interface;
+using API_Core.Model.Models;
 
 namespace API_Core.Controllers
 {

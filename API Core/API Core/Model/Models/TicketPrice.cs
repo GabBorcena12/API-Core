@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API_Core.Model
+namespace API_Core.Model.Models
 {
     public class TicketPrice
     {

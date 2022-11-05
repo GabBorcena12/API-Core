@@ -14,6 +14,7 @@ namespace API_Core
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+             
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,5 +23,8 @@ namespace API_Core
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+
+
     }
 }

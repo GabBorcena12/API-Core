@@ -1,9 +1,9 @@
-﻿using API_Core.Model;
+﻿using API_Core.Model.Models;
 using System.Collections.Generic;
 
 namespace API_Core.Interface
 {
-    public interface iDestination
+    public interface IDestination
     {
         public List<TouristDestination> GetDestinations();
         public TouristDestination GetDestinationsById(int id);

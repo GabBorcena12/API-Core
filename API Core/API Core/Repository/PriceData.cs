@@ -1,10 +1,11 @@
 ﻿using API_Core.DBContext;
-using API_Core.Model;
+using API_Core.Interface;
+using API_Core.Model.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace API_Core.Interface
+namespace API_Core.Repository
 {
     public class PriceData : IPrice
     {
@@ -45,28 +46,30 @@ namespace API_Core.Interface
                     TicketPrice insertModel = new TicketPrice();
 
                     insertModel.Id = model.Id;
-                    insertModel.TicketId = (model.TicketId > 0 ? model.TicketId : modelUpdate.TicketId);
-                    insertModel.SeatId = (model.SeatId > 0? model.SeatId : modelUpdate.SeatId); 
-                    insertModel.Price = (model.Price > 0 ? model.Price : modelUpdate.Price);
+                    insertModel.TicketId = model.TicketId > 0 ? model.TicketId : modelUpdate.TicketId;
+                    insertModel.SeatId = model.SeatId > 0 ? model.SeatId : modelUpdate.SeatId;
+                    insertModel.Price = model.Price > 0 ? model.Price : modelUpdate.Price;
 
-                    _db.Entry<TicketPrice>(modelUpdate).State = EntityState.Detached;
+                    _db.Entry(modelUpdate).State = EntityState.Detached;
                     _db.tblTicketPrice.Update(insertModel);
                     _db.SaveChanges();
                     return model.Id;
                 }
-                else { 
+                else
+                {
                     return 0;
                 }
             }
-            else { 
+            else
+            {
                 //create
                 TicketPrice price = new TicketPrice();
                 price.Id = model.Id;
                 price.Price = model.Price;
-                price.SeatId = model.SeatId; 
-                price.TicketId = model.TicketId; 
+                price.SeatId = model.SeatId;
+                price.TicketId = model.TicketId;
 
-                _db.tblTicketPrice.Add(price); 
+                _db.tblTicketPrice.Add(price);
                 _db.SaveChanges();
 
                 var query = _db.tblTicketPrice.Where(x => x.TicketId == model.TicketId && x.SeatId == model.SeatId &&
@@ -75,7 +78,8 @@ namespace API_Core.Interface
                 {
                     return query.Id;
                 }
-                else { 
+                else
+                {
                     return 0;
                 }
             }

@@ -1,4 +1,4 @@
-﻿using API_Core.Model;
+﻿using API_Core.Model.Models;
 using System.Collections.Generic;
 
 namespace API_Core.Interface
