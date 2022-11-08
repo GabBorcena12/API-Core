@@ -50,15 +50,15 @@ namespace API_Core.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> login([FromBody] LoginDto loginDto)
         {
-            var isValidUser = await _authManager.Login(loginDto);
+            var authResponse = await _authManager.Login(loginDto);
 
             //return errors when trying to login the user
-            if (!isValidUser)
+            if (authResponse == null)
             {
                 return Unauthorized();
             }
-
-            return Ok();
+             
+            return Ok(authResponse);
 
         }
 

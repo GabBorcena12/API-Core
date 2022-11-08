@@ -4,6 +4,7 @@ using API_Core.Model;
 using API_Core.Model.Data_Transfer_Objects;
 using API_Core.Repository;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 namespace API_Core.Controllers
 {
     [ApiController]
+    [Authorize]
     public class TicketApiController : ControllerBase
     {
         private iTicket _iTicket;
@@ -52,6 +54,7 @@ namespace API_Core.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [Route("api/Ticket/CreateTicket")]
         public IActionResult CreateTicket(CreateTicketDto model)
         {
@@ -69,6 +72,7 @@ namespace API_Core.Controllers
         }
 
         [HttpPatch]
+        [Authorize]
         [Route("api/Ticket/UpdateTicket")]
         public IActionResult UpdateTicket(UpdateTicketDto model)
         {
@@ -85,6 +89,7 @@ namespace API_Core.Controllers
 
         }
         [HttpDelete]
+        [Authorize(Roles ="Administrator,User")]
         [Route("api/Ticket/DeleteTicketById/{id}")]
         public  IActionResult DeleteTicketById(int id)
         { 
