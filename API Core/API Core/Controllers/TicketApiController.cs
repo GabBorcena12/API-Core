@@ -7,32 +7,39 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Threading.Tasks; 
 
 namespace API_Core.Controllers
 {
     [ApiController]
-    [Authorize]
     public class TicketApiController : ControllerBase
     {
         private iTicket _iTicket;
 
         private readonly TicketDbContext _db;
         private readonly IMapper _mapper;
+        private readonly ILogger<TicketApiController> _logger;
 
-        public TicketApiController(TicketDbContext db, TicketData iTicket, IMapper  mapper)
-        {
-            _db = db;
-            _iTicket = iTicket;
-            this._mapper = mapper;
+        public TicketApiController(TicketDbContext db, TicketData iTicket, IMapper  mapper, ILogger<TicketApiController> logger)
+        { 
+                _db = db;
+                _iTicket = iTicket;
+                this._mapper = mapper;
+                this._logger = logger; 
+
         }
 
         [HttpGet]
+        [Authorize]
         [Route("api/Ticket/GetTicket")]
         public ActionResult<IEnumerable<GetTicketDto>> GetTicket()
         {
+            //Log Data on Console using Serilog
+            //_logger.LogInformation("Log Here..");
             var result = _iTicket.GetAsync();
             return  Ok(result);
         }
