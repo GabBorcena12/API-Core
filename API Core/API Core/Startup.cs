@@ -25,6 +25,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IO;
 using System.Reflection;
+using API_Core.MiddleWare;
+using Serilog.Context;
 
 namespace API_Core
 {
@@ -33,15 +35,18 @@ namespace API_Core
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            //Serilog
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            
-
+        { 
             //JSON Web Tokens
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -63,7 +68,7 @@ namespace API_Core
             //Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "You api title", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Core", Version = "v1" });
                     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                     {
                         Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
@@ -96,7 +101,10 @@ namespace API_Core
             //ApiUser 
             services.AddIdentityCore<ApiUser>()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<TicketDbContext>();
+                .AddTokenProvider<DataProtectorTokenProvider<ApiUser>>("ApiCoreAPI") //Refresh Token Implementation
+                .AddEntityFrameworkStores<TicketDbContext>()
+                .AddDefaultTokenProviders(); //Refresh Token Implementation
+
             //AutoMapper
             services.AddAutoMapper(typeof(MapperConfig));
             //Enable CORS
@@ -140,21 +148,23 @@ namespace API_Core
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiCoreAPI v1"));
-            } 
-            /*app.UseSwagger(options =>
-            {
-                options.SerializeAsV2 = true;
-            });
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                options.RoutePrefix = string.Empty;
-            }); */
+            }
+
+            app.UseMiddleware<ExceptionMiddleWare>(); //Handle Global Error 
             app.UseHttpsRedirection(); 
 
             app.UseRouting();
             app.UseAuthentication(); 
             app.UseAuthorization();
+
+            /*app.Use(async (httpContext, next) =>
+            {
+                var username = httpContext.User.Identity.IsAuthenticated ? httpContext.User.Identity.Name : "anonymous";
+
+                LogContext.PushProperty("UserName", username);
+
+                await next.Invoke();
+            });*/
 
             app.UseEndpoints(endpoints =>
             {

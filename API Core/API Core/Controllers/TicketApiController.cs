@@ -1,4 +1,5 @@
 ﻿using API_Core.DBContext;
+using API_Core.Exceptions;
 using API_Core.Interface;
 using API_Core.Model;
 using API_Core.Model.Data_Transfer_Objects;
@@ -38,21 +39,31 @@ namespace API_Core.Controllers
         [Route("api/Ticket/GetTicket")]
         public ActionResult<IEnumerable<GetTicketDto>> GetTicket()
         {
-            //Log Data on Console using Serilog
-            //_logger.LogInformation("Log Here..");
-            var result = _iTicket.GetAsync();
-            return  Ok(result);
+            try
+            {
+                var result = _iTicket.GetAsync();
+                return Ok(result);
+            }
+            catch (Exception ex) {
+                //Serilog.Log.Error($"Something went wrong with {nameof(GetTicket)} ==> Get Method Error Details: {0}", ex);
+                //_logger.LogError($"Something went wrong with {nameof(GetTicket)}. Error Message: {ex.Message}.");
+                return Problem($"Something went wrong with {nameof(GetTicket)}. Error Message: {ex.Message}.", statusCode: 500);
+            }
         }
 
         [HttpGet]
+        [Authorize]
         [Route("api/Ticket/GetTicketById/{id}")]
         public ActionResult<GetTicketDto> GetTicketById(int id)
-        { 
+        {
+
             var result = _iTicket.GetAsyncId(id);
 
-            if (result == null) {
-
-                return NotFound($"Ticket No. {id} cannot be found.");
+            if (result == null)
+            {
+                //var errorThrow =  new NotFoundException(nameof(GetTicketById),id);
+                //Serilog.Log.Error($"Something went wrong with {nameof(GetTicket)} ==> Get Method Error Details: {0}");
+                return NotFound($"Ticket id {id} not found.");
             }
 
             return Ok(result);
@@ -61,56 +72,91 @@ namespace API_Core.Controllers
 
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Administrator,User")]
         [Route("api/Ticket/CreateTicket")]
         public IActionResult CreateTicket(CreateTicketDto model)
         {
-            var result = _iTicket.CreateAsync(model);
+            try
+            {
+                var result = _iTicket.CreateAsync(model);
 
-            if (result > 0)
-            {
-                return Ok($"Ticket No. {result} added successfullt");
+                if (result > 0)
+                {
+                    return Ok($"Ticket No. {result} added successfullt");
+                }
+                else
+                {
+                    return BadRequest($"Failed to add ticket.");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest($"Failed to add ticket.");
+
+                _logger.LogError($"Something went wrong with {nameof(CreateTicket)}. Error Message: { ex.Message}.");
+                return Problem($"Something went wrong with {nameof(CreateTicket)}. Error Message: {ex.Message}.", statusCode: 500);
             }
+            
 
         }
 
-        [HttpPatch]
-        [Authorize]
+        [HttpPatch] 
+        [Authorize(Roles = "Administrator,User")]
         [Route("api/Ticket/UpdateTicket")]
         public IActionResult UpdateTicket(UpdateTicketDto model)
         {
-            var result = _iTicket.UpdateAsync(model);
-
-            if (result > 0)
-            {  
-                return Ok($"Ticket No. {model.Id} has been updated."); 
-            }
-            else
+            try
             {
-                return BadRequest($"Failed to update ticket.");
+                var result = _iTicket.UpdateAsync(model);
+
+                if (result > 0)
+                {
+                    return Ok($"Ticket No. {model.Id} has been updated.");
+                }
+                else
+                {
+                    return BadRequest($"Failed to update ticket.");
+                }
             }
+            catch (Exception ex)
+            {
+
+                _logger.LogError($"Something went wrong with {nameof(UpdateTicket)}. Error Message: {ex.Message}.");
+                return Problem($"Something went wrong with {nameof(UpdateTicket)}. Error Message: {ex.Message}.", statusCode: 500);
+            }
+            
 
         }
+
         [HttpDelete]
-        [Authorize(Roles ="Administrator,User")]
+        [Authorize(Roles = "Administrator")]
         [Route("api/Ticket/DeleteTicketById/{id}")]
         public  IActionResult DeleteTicketById(int id)
-        { 
-            var result = _iTicket.DeleteAsyncId(id);
-            if (result != 1)
+        {
+            try
             {
-                return NotFound($"Ticket No.{id} has not been deleted.");
+                var result = _iTicket.DeleteAsyncId(id);
+                if (result != 1)
+                {
+                    //throw new NotFoundException(nameof(DeleteTicketById), id);
+
+                    _logger.LogError($"Something went wrong with {nameof(DeleteTicketById)}.");
+                    return NotFound($"Ticket id {id} cannot be deleted.");
+                }
+
+                return Ok($"Ticket No. {id} deleted successfully");
             }
 
-            return Ok($"Ticket No. {id} deleted successfully");
+            catch (Exception ex)
+            {
+
+                _logger.LogError($"Something went wrong with {nameof(DeleteTicketById)}. Error Message: {ex.Message}.");
+                return Problem($"Something went wrong with {nameof(DeleteTicketById)}. Error Message: {ex.Message}.", statusCode: 500);
+            }
         }
 
         /////////////////////////////Async////////////////////////////////////////
-
+        [NonAction]
         [HttpGet]
         [Route("api/Ticket/GetAsyncTicketById/{id}")]
         public async Task<ActionResult<GetTicketDto>> GetAsyncTicketById(int id)
@@ -126,7 +172,7 @@ namespace API_Core.Controllers
             return Ok(result);
 
         }
-
+        [NonAction]
         [HttpGet]
         [Route("api/Ticket/GetAsyncTicket")]
         public async Task<ActionResult<IEnumerable<GetTicketDto>>> GetAsyncTicket()

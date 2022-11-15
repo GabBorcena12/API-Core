@@ -61,6 +61,26 @@ namespace API_Core.Controllers
             return Ok(authResponse);
 
         }
+        
+        //api/account/RefreshToken
+        [HttpPost]
+        [Route("RefreshToken")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> RefreshToken([FromBody] AuthResponseDto authResponseDto)
+        {
+            var authResponse = await _authManager.VerifyResfreshToken(authResponseDto);
+
+            //return errors when trying to login the user
+            if (authResponse == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(authResponse);
+
+        }
 
     }
 }
