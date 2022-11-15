@@ -34,12 +34,7 @@ namespace API_Core
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-
-            //Serilog
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
+            Configuration = configuration; 
         }
 
         public IConfiguration Configuration { get; }
@@ -138,8 +133,15 @@ namespace API_Core
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILoggerFactory loggerFactory, IConfiguration configuration)
+        { 
+            //Serilog
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .Enrich.FromLogContext()
+                .CreateLogger();
+
+            loggerFactory.AddSerilog();
 
             //Swagger
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -157,14 +159,14 @@ namespace API_Core
             app.UseAuthentication(); 
             app.UseAuthorization();
 
-            /*app.Use(async (httpContext, next) =>
+            app.Use(async (httpContext, next) =>
             {
                 var username = httpContext.User.Identity.IsAuthenticated ? httpContext.User.Identity.Name : "anonymous";
 
                 LogContext.PushProperty("UserName", username);
 
                 await next.Invoke();
-            });*/
+            });
 
             app.UseEndpoints(endpoints =>
             {
