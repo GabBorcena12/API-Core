@@ -136,12 +136,13 @@ namespace API_Core
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILoggerFactory loggerFactory, IConfiguration configuration)
         {
             //Serilog
-            Log.Logger = new LoggerConfiguration()
+            var logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
                 .Enrich.FromLogContext()
                 .CreateLogger();
-
-            loggerFactory.AddSerilog();
+             
+            loggerFactory.AddSerilog(logger);
+             
 
             //Swagger
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

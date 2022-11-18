@@ -20,15 +20,23 @@ namespace API_Core
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
+            //Serilog to File
+            Log.Logger = new LoggerConfiguration()
+               .Enrich.FromLogContext()
+               .WriteTo.Console()
+               .WriteTo.Debug(outputTemplate: DateTime.Now.ToString())
+               .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+               .WriteTo.Seq("http://localhost:5001/")
+               .CreateLogger();
             CreateHostBuilder(args).Build().Run();
-
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog()
+            .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

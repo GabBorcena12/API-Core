@@ -1,0 +1,26 @@
+2022-11-19 00:28:43.079 +08:00 [INF] User profile is available. Using 'C:\Users\gabri\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-11-19 00:28:43.651 +08:00 [INF] Now listening on: https://localhost:5001
+2022-11-19 00:28:43.653 +08:00 [INF] Now listening on: http://localhost:5000
+2022-11-19 00:28:43.656 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-11-19 00:28:43.659 +08:00 [INF] Hosting environment: Development
+2022-11-19 00:28:43.661 +08:00 [INF] Content root path: C:\Users\gabri\OneDrive\Documents\API-Core\API Core\API Core
+2022-11-19 00:28:44.145 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/index.html  
+2022-11-19 00:28:44.263 +08:00 [INF] Request finished in 121.3234ms 200 text/html;charset=utf-8
+2022-11-19 00:28:44.273 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js  
+2022-11-19 00:28:44.277 +08:00 [INF] Request finished in 6.7834ms 200 application/javascript; charset=utf-8
+2022-11-19 00:28:44.279 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_vs/browserLink  
+2022-11-19 00:28:44.294 +08:00 [INF] Request finished in 14.8111ms 200 text/javascript; charset=UTF-8
+2022-11-19 00:28:44.369 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json  
+2022-11-19 00:28:44.458 +08:00 [INF] Request finished in 89.1301ms 200 application/json;charset=utf-8
+2022-11-19 00:28:48.394 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/Ticket/GetTicket  
+2022-11-19 00:28:48.460 +08:00 [INF] Executing endpoint 'API_Core.Controllers.TicketApiController.GetTicket (API Core)'
+2022-11-19 00:28:48.482 +08:00 [INF] Route matched with {action = "GetTicket", controller = "TicketApi"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[API_Core.Model.Data_Transfer_Objects.GetTicketDto]] GetTicket() on controller API_Core.Controllers.TicketApiController (API Core).
+2022-11-19 00:28:48.644 +08:00 [INF] Get Ticket Run using Log Information
+2022-11-19 00:28:49.161 +08:00 [INF] Entity Framework Core 5.0.17 initialized 'TicketDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: MaxPoolSize=128 
+2022-11-19 00:28:49.566 +08:00 [INF] Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[AvailableSeats], [t].[DateCreated], [t].[Description], [t].[StreamingDateTime], [t].[TotalSeats]
+FROM [tblTicket] AS [t]
+2022-11-19 00:28:49.645 +08:00 [INF] Executing ObjectResult, writing value of type 'System.Collections.Generic.List`1[[API_Core.Model.Data_Transfer_Objects.GetTicketDto, API Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-11-19 00:28:49.753 +08:00 [INF] Executed action API_Core.Controllers.TicketApiController.GetTicket (API Core) in 1264.3594ms
+2022-11-19 00:28:49.756 +08:00 [INF] Executed endpoint 'API_Core.Controllers.TicketApiController.GetTicket (API Core)'
+2022-11-19 00:28:49.765 +08:00 [INF] Request finished in 1371.0262ms 200 application/json; charset=utf-8

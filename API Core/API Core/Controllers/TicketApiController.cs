@@ -39,18 +39,15 @@ namespace API_Core.Controllers
         //[Authorize]
         [Route("api/Ticket/GetTicket")]
         public ActionResult<IEnumerable<GetTicketDto>> GetTicket()
-        {
-            LogContext.PushProperty("UserId", 1);
-            Serilog.Log.Error($"Get Ticket Run");
-            _logger.LogInformation($"Get Ticket Run using Log Information");
+        { 
+            _logger.LogInformation("Get Ticket Run using Log Information");
             try
             {
                 var result = _iTicket.GetAsync();
                 return Ok(result);
             }
             catch (Exception ex) {
-                Serilog.Log.Error($"Something went wrong with {nameof(GetTicket)} ==> Get Method Error Details: {0}", ex);
-                //_logger.LogError($"Something went wrong with {nameof(GetTicket)}. Error Message: {ex.Message}.");
+                _logger.LogError($"Something went wrong with {nameof(GetTicket)}. Error Message: {ex.Message}.");
                 return Problem($"Something went wrong with {nameof(GetTicket)}. Error Message: {ex.Message}.", statusCode: 500);
             }
         }
