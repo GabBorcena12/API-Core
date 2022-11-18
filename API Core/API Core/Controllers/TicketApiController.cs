@@ -36,10 +36,10 @@ namespace API_Core.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [Route("api/Ticket/GetTicket")]
         public ActionResult<IEnumerable<GetTicketDto>> GetTicket()
-        { 
+        {
             LogContext.PushProperty("UserId", 1);
             Serilog.Log.Error($"Get Ticket Run");
             _logger.LogInformation($"Get Ticket Run using Log Information");
@@ -59,7 +59,7 @@ namespace API_Core.Controllers
         [Authorize]
         [Route("api/Ticket/GetTicketById/{id}")]
         public ActionResult<GetTicketDto> GetTicketById(int id)
-        {
+        {   
 
             var result = _iTicket.GetAsyncId(id);
 

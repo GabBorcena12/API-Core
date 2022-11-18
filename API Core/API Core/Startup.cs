@@ -134,7 +134,7 @@ namespace API_Core
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,ILoggerFactory loggerFactory, IConfiguration configuration)
-        { 
+        {
             //Serilog
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
@@ -153,10 +153,10 @@ namespace API_Core
             }
 
             app.UseMiddleware<ExceptionMiddleWare>(); //Handle Global Error 
-            app.UseHttpsRedirection(); 
+            app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseAuthentication(); 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.Use(async (httpContext, next) =>
