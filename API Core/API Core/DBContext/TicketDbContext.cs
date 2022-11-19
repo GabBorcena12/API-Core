@@ -18,6 +18,7 @@ namespace API_Core.DBContext
         public DbSet<TicketSeats> tblTicketSeats { get; set; }
         public DbSet<TicketPrice> tblTicketPrice { get; set; }
         public DbSet<TouristDestination> tblTouristDestinations { get; set; }
+        public DbSet<ErrorDetails> tblErrorLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

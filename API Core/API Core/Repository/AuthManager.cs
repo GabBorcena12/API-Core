@@ -117,6 +117,7 @@ namespace API_Core.Repository
                 return null;
             }
 
+
             var token = await GenerateToken();
             return new AuthResponseDto { 
                 Token = token,

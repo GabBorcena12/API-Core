@@ -53,7 +53,7 @@ namespace API_Core.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [Route("api/Ticket/GetTicketById/{id}")]
         public ActionResult<GetTicketDto> GetTicketById(int id)
         {   
@@ -62,9 +62,7 @@ namespace API_Core.Controllers
 
             if (result == null)
             {
-                //var errorThrow =  new NotFoundException(nameof(GetTicketById),id);
-                //Serilog.Log.Error($"Something went wrong with {nameof(GetTicket)} ==> Get Method Error Details: {0}");
-                return NotFound($"Ticket id {id} not found.");
+                throw  new NotFoundException(nameof(GetTicketById),id); 
             }
 
             return Ok(result);
@@ -87,7 +85,7 @@ namespace API_Core.Controllers
                 }
                 else
                 {
-                    return BadRequest($"Failed to add ticket.");
+                    throw new BadRequestException(nameof(CreateTicket), model.Id); 
                 }
 
             }
@@ -116,7 +114,7 @@ namespace API_Core.Controllers
                 }
                 else
                 {
-                    return BadRequest($"Failed to update ticket.");
+                    throw new BadRequestException(nameof(UpdateTicket), model.Id);
                 }
             }
             catch (Exception ex)
@@ -139,10 +137,7 @@ namespace API_Core.Controllers
                 var result = _iTicket.DeleteAsyncId(id);
                 if (result != 1)
                 {
-                    //throw new NotFoundException(nameof(DeleteTicketById), id);
-
-                    _logger.LogError($"Something went wrong with {nameof(DeleteTicketById)}.");
-                    return NotFound($"Ticket id {id} cannot be deleted.");
+                    throw new NotFoundException(nameof(DeleteTicketById), id); 
                 }
 
                 return Ok($"Ticket No. {id} deleted successfully");
@@ -150,7 +145,6 @@ namespace API_Core.Controllers
 
             catch (Exception ex)
             {
-
                 _logger.LogError($"Something went wrong with {nameof(DeleteTicketById)}. Error Message: {ex.Message}.");
                 return Problem($"Something went wrong with {nameof(DeleteTicketById)}. Error Message: {ex.Message}.", statusCode: 500);
             }
