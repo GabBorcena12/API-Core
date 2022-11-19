@@ -130,6 +130,8 @@ namespace API_Core
             services.AddScoped<IAuthManager, AuthManager>();
             services.AddScoped<AuthManager>();
 
+            services.AddScoped<ILogging, Logging>();
+            services.AddScoped<Logging>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

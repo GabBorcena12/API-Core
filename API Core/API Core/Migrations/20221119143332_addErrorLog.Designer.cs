@@ -4,14 +4,16 @@ using API_Core.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API_Core.Migrations
 {
     [DbContext(typeof(TicketDbContext))]
-    partial class TicketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221119143332_addErrorLog")]
+    partial class addErrorLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,9 +110,6 @@ namespace API_Core.Migrations
 
                     b.Property<string>("ErrorType")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StatusCode")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
@@ -276,15 +275,15 @@ namespace API_Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c741059e-7230-43de-98cc-9b3eaaa468ac",
-                            ConcurrencyStamp = "e7b23af6-6b7d-4f10-8030-ffa338e93358",
+                            Id = "bfc3c714-0b54-46de-bb9c-0b5ce2837640",
+                            ConcurrencyStamp = "d8bf8b60-7d72-4329-8db0-7e00472b1076",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "d21c3b99-d2e3-43a7-b6c8-72a1946ba9bb",
-                            ConcurrencyStamp = "b4d3e1e0-5085-4a2d-b2a8-2f585c0eedb7",
+                            Id = "34ca35ca-d522-49f4-aa7b-eef6755a3b3f",
+                            ConcurrencyStamp = "4b7a0625-32b3-48a3-bd4e-f60d43f8a2a4",
                             Name = "User",
                             NormalizedName = "USER"
                         });
