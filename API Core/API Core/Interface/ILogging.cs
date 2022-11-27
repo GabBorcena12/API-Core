@@ -6,6 +6,6 @@ namespace API_Core.Interface
 {
     public interface ILogging
     {
-        public void Log(ErrorDetails errorDetails);
+        public void Log(ErrorDetails errorDetails); 
     }
 }

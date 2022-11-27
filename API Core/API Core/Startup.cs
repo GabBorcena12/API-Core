@@ -27,6 +27,8 @@ using System.IO;
 using System.Reflection;
 using API_Core.MiddleWare;
 using Serilog.Context;
+using System.Net.Http;
+using Microsoft.AspNetCore.Http; 
 
 namespace API_Core
 {
@@ -108,30 +110,21 @@ namespace API_Core
             //JSON Serializer
             services.AddControllersWithViews().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
-
+             
 
             services.AddDbContextPool<TicketDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConn")));
 
             services.AddScoped<iTicket, TicketData>();
             services.AddScoped<TicketData>();
 
-            services.AddScoped<iTransaction, Transaction>();
-            services.AddScoped<Transaction>();  
-
-            services.AddScoped<IPrice, PriceData>();
-            services.AddScoped<PriceData>();
-
-            services.AddScoped<ISeat, SeatData>();
-            services.AddScoped<SeatData>();
-
-            services.AddScoped<IDestination, Destination>();
-            services.AddScoped<Destination>();
-
             services.AddScoped<IAuthManager, AuthManager>();
             services.AddScoped<AuthManager>();
 
             services.AddScoped<ILogging, Logging>();
             services.AddScoped<Logging>();
+
+            services.AddScoped<iSeatCategory, SeatCategoryData>();
+            services.AddScoped<SeatCategoryData>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -160,7 +153,7 @@ namespace API_Core
 
             app.UseRouting();
             app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseAuthorization(); 
 
             app.Use(async (httpContext, next) =>
             {

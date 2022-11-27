@@ -2,7 +2,7 @@
 
 namespace API_Core.Model.Data_Transfer_Objects
 {
-    public class CreateTicketDto : TicketDto
+    public class GetTicketDtoById:TicketDto
     { 
         public int Id { get; set; }
         public int SeatCategoryId { get; set; }

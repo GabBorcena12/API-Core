@@ -3,8 +3,8 @@ using API_Core.Model.Data_Transfer_Objects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
-
 namespace API_Core.Controllers
 {
     [Route("api/[controller]")]
@@ -59,10 +59,10 @@ namespace API_Core.Controllers
             }
              
             return Ok(authResponse);
-
         }
-        
+
         //api/account/RefreshToken
+        [NonAction]
         [HttpPost]
         [Route("RefreshToken")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -77,7 +77,7 @@ namespace API_Core.Controllers
             {
                 return Unauthorized();
             }
-
+             
             return Ok(authResponse);
 
         }

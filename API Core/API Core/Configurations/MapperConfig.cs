@@ -9,9 +9,11 @@ namespace API_Core.Configurations
         public MapperConfig()
         {
             CreateMap<ApiUser, ApiUserDto>().ReverseMap();
-            CreateMap<Ticket, CreateTicketDto>().ReverseMap();
             CreateMap<Ticket, GetTicketDto>().ReverseMap();
-            CreateMap<Ticket, UpdateTicketDto>().ReverseMap();
+            CreateMap<Ticket, GetTicketDtoById>().ReverseMap();
+            CreateMap<Ticket, CreateTicketDto>().ReverseMap();
+            CreateMap<Ticket, UpdateTicketDto>().ReverseMap(); 
+            CreateMap<SeatCategory, SeatCategoryDto>().ReverseMap();
 
         }
     }

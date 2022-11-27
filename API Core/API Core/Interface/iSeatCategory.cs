@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace API_Core.Interface
 {
-    public interface iTicket
+    public interface iSeatCategory
     {
-        public List<GetTicketDto> GetAsync();
-        public GetTicketDtoById GetAsyncId(int id);
-        public int CreateAsync(CreateTicketDto model);
-        public int UpdateAsync(UpdateTicketDto model);
+        public List<SeatCategoryDto> GetAsync();
+        public SeatCategoryDto GetAsyncId(int id);
+        public int CreateAsync(SeatCategoryDto model);
+        public int UpdateAsync(SeatCategoryDto model);
         public  int DeleteAsyncId(int id);
     }
 }
