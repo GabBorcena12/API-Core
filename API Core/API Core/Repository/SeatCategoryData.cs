@@ -12,42 +12,42 @@ using System.Threading.Tasks;
 
 namespace API_Core.Repository
 {
-    public class TicketData : iTicket
+    public class SeatCategoryData : iSeatCategory
     {
         private TicketDbContext _db;
         private readonly IMapper _mapper;
-        public TicketData(TicketDbContext db, IMapper mapper)
+        public SeatCategoryData(TicketDbContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
         }
 
 
-        public List<GetTicketDto> GetAsync()
+        public List<SeatCategoryDto> GetAsync()
         {
-            var result = _db.tblTicket.ToList();
-            var ticket = _mapper.Map<List<GetTicketDto>>(result);
-            return ticket;
+            var result = _db.tblSeatCategory.ToList();
+            var result2 = _mapper.Map<List<SeatCategoryDto>>(result);
+            return result2;
         }
-        public GetTicketDtoById GetAsyncId(int id)
+        public SeatCategoryDto GetAsyncId(int id)
         {
-            var result = _db.tblTicket.Include(q => q.SeatCategory).FirstOrDefault(q => q.Id == id);
-            var ticket = _mapper.Map<GetTicketDtoById>(result);
-            return ticket;
+            var result = _db.tblSeatCategory.Find(id);
+            var result2 = _mapper.Map<SeatCategoryDto>(result);
+            return result2;
         }
 
         public int DeleteAsyncId(int id)
         {
-            var findById = _db.tblTicket.Find(id);
+            var findById = _db.tblSeatCategory.Find(id);
             if (findById == null)
             {
                 return 0;
             }
 
-            Ticket ticket = _mapper.Map<Ticket>(findById);
+            SeatCategory seat = _mapper.Map<SeatCategory>(findById);
             try
             {
-                _db.tblTicket.Remove(ticket);
+                _db.tblSeatCategory.Remove(seat);
                 _db.SaveChanges();
                 return 1;
             }
@@ -59,16 +59,16 @@ namespace API_Core.Repository
         }
 
 
-        public int CreateAsync(CreateTicketDto model)
+        public int CreateAsync(SeatCategoryDto model)
         {
             if (model.Id <= 0)
             {
-                var ticket = _mapper.Map<Ticket>(model); 
+                var result = _mapper.Map<SeatCategory>(model);
+
 
                 try
                 {
-                    _db.tblTicket.Add(ticket);
-                    _db.tblSeatCategory.Add(ticket.SeatCategory);
+                    _db.tblSeatCategory.Add(result);
                     _db.SaveChanges();
                 }
                 catch (Exception ex)
@@ -77,7 +77,7 @@ namespace API_Core.Repository
                 }
 
                 //Check if it is inserted correctly
-                var query = _db.tblTicket.Where(t => t.StreamingDateTime == model.StreamingDateTime && t.Description == model.Description).FirstOrDefault();
+                var query = _db.tblSeatCategory.Where(t => t.Code == result.Code && t.Description == result.Description).FirstOrDefault();
 
                 if (query != null)
                 {
@@ -90,21 +90,20 @@ namespace API_Core.Repository
 
         }
 
-        public int UpdateAsync(UpdateTicketDto modelUpdateDto)
+        public int UpdateAsync(SeatCategoryDto modelUpdateDto)
         {
-            var modelUpdate = _db.tblTicket.Find(modelUpdateDto.Id);
+            var modelUpdate = _db.tblSeatCategory.Find(modelUpdateDto.Id);
             if (modelUpdate == null)
             {
                 return 0;
             }
 
 
-            Ticket insertModel = _mapper.Map<Ticket>(modelUpdateDto);
+            SeatCategory insertModel = _mapper.Map<SeatCategory>(modelUpdateDto);
             try
             {
                 _db.Entry(modelUpdate).State = EntityState.Detached;
-                _db.tblTicket.Update(insertModel);
-                _db.tblSeatCategory.Update(insertModel.SeatCategory);
+                _db.tblSeatCategory.Update(insertModel);
                 _db.SaveChanges();
             }
             catch (Exception ex)

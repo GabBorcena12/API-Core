@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,5 +17,7 @@ namespace API_Core.Model.Models
         public int? AvailableSeats { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? StreamingDateTime { get; set; }
+        public int SeatCategoryId { get; set; } 
+        public virtual SeatCategory SeatCategory  { get; set; }
     }
 }

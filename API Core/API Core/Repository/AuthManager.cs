@@ -115,8 +115,7 @@ namespace API_Core.Repository
 
             if (_user == null || isValidUser == false) {
                 return null;
-            }
-
+            } 
 
             var token = await GenerateToken();
             return new AuthResponseDto { 

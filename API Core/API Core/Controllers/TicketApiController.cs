@@ -3,6 +3,7 @@ using API_Core.Exceptions;
 using API_Core.Interface;
 using API_Core.Model;
 using API_Core.Model.Data_Transfer_Objects;
+using API_Core.Model.Models;
 using API_Core.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks; 
 
+
 namespace API_Core.Controllers
 {
     [ApiController]
@@ -26,7 +28,7 @@ namespace API_Core.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<TicketApiController> _logger;
 
-        public TicketApiController(TicketDbContext db, TicketData iTicket, IMapper  mapper, ILogger<TicketApiController> logger)
+        public TicketApiController(TicketDbContext db, iTicket iTicket, IMapper  mapper, ILogger<TicketApiController> logger)
         { 
                 _db = db;
                 _iTicket = iTicket;
@@ -55,11 +57,11 @@ namespace API_Core.Controllers
         [HttpGet]
         //[Authorize]
         [Route("api/Ticket/GetTicketById/{id}")]
-        public ActionResult<GetTicketDto> GetTicketById(int id)
+        public ActionResult<Ticket> GetTicketById(int id)
         {   
 
             var result = _iTicket.GetAsyncId(id);
-
+            
             if (result == null)
             {
                 throw  new NotFoundException(nameof(GetTicketById),id); 
@@ -71,7 +73,7 @@ namespace API_Core.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "Administrator,User")]
+        //[Authorize(Roles = "Administrator,User")]
         [Route("api/Ticket/CreateTicket")]
         public IActionResult CreateTicket(CreateTicketDto model)
         {
@@ -100,7 +102,7 @@ namespace API_Core.Controllers
         }
 
         [HttpPatch] 
-        [Authorize(Roles = "Administrator,User")]
+        //[Authorize(Roles = "Administrator,User")]
         [Route("api/Ticket/UpdateTicket")]
         public IActionResult UpdateTicket(UpdateTicketDto model)
         {
@@ -128,7 +130,7 @@ namespace API_Core.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator,User")]
         [Route("api/Ticket/DeleteTicketById/{id}")]
         public  IActionResult DeleteTicketById(int id)
         {

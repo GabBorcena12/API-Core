@@ -120,6 +120,24 @@ namespace API_Core.Migrations
                     b.ToTable("tblErrorLogs");
                 });
 
+            modelBuilder.Entity("API_Core.Model.Models.SeatCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tblSeatCategory");
+                });
+
             modelBuilder.Entity("API_Core.Model.Models.Ticket", b =>
                 {
                     b.Property<int>("Id")
@@ -136,6 +154,9 @@ namespace API_Core.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("SeatCategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("StreamingDateTime")
                         .HasColumnType("datetime2");
 
@@ -144,107 +165,9 @@ namespace API_Core.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SeatCategoryId");
+
                     b.ToTable("tblTicket");
-                });
-
-            modelBuilder.Entity("API_Core.Model.Models.TicketPrice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("SeatId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TicketId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SeatId");
-
-                    b.HasIndex("TicketId");
-
-                    b.ToTable("tblTicketPrice");
-                });
-
-            modelBuilder.Entity("API_Core.Model.Models.TicketSeats", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tblTicketSeats");
-                });
-
-            modelBuilder.Entity("API_Core.Model.Models.TouristDestination", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Label")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("URLPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tblTouristDestinations");
-                });
-
-            modelBuilder.Entity("API_Core.Model.Models.Transact", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AcquiredSeats")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PriceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SeatId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("StreamingDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TicketId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PriceId");
-
-                    b.HasIndex("SeatId");
-
-                    b.HasIndex("TicketId");
-
-                    b.ToTable("tblTransaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -276,15 +199,15 @@ namespace API_Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c741059e-7230-43de-98cc-9b3eaaa468ac",
-                            ConcurrencyStamp = "e7b23af6-6b7d-4f10-8030-ffa338e93358",
+                            Id = "50b7d74d-af64-43b1-9f17-f32aaf76c5af",
+                            ConcurrencyStamp = "59988eb3-8d63-4726-b92e-de522adce191",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "d21c3b99-d2e3-43a7-b6c8-72a1946ba9bb",
-                            ConcurrencyStamp = "b4d3e1e0-5085-4a2d-b2a8-2f585c0eedb7",
+                            Id = "c94a3a0c-e4f5-4eaa-b01f-f0274ec78462",
+                            ConcurrencyStamp = "8a6065b6-e3c8-4202-b901-e319bbd36f86",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -394,50 +317,15 @@ namespace API_Core.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("API_Core.Model.Models.TicketPrice", b =>
+            modelBuilder.Entity("API_Core.Model.Models.Ticket", b =>
                 {
-                    b.HasOne("API_Core.Model.Models.TicketSeats", "TicketSeats")
+                    b.HasOne("API_Core.Model.Models.SeatCategory", "SeatCategory")
                         .WithMany()
-                        .HasForeignKey("SeatId")
+                        .HasForeignKey("SeatCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API_Core.Model.Models.Ticket", "Ticket")
-                        .WithMany()
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ticket");
-
-                    b.Navigation("TicketSeats");
-                });
-
-            modelBuilder.Entity("API_Core.Model.Models.Transact", b =>
-                {
-                    b.HasOne("API_Core.Model.Models.TicketPrice", "TicketPrice")
-                        .WithMany()
-                        .HasForeignKey("PriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_Core.Model.Models.TicketSeats", "TicketSeats")
-                        .WithMany()
-                        .HasForeignKey("SeatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_Core.Model.Models.Ticket", "Ticket")
-                        .WithMany()
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ticket");
-
-                    b.Navigation("TicketPrice");
-
-                    b.Navigation("TicketSeats");
+                    b.Navigation("SeatCategory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
