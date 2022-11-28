@@ -124,7 +124,9 @@ namespace API_Core
             services.AddScoped<Logging>();
 
             services.AddScoped<iSeatCategory, SeatCategoryData>();
-            services.AddScoped<SeatCategoryData>(); 
+            services.AddScoped<SeatCategoryData>();
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>)); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

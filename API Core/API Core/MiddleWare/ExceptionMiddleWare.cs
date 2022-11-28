@@ -65,7 +65,8 @@ namespace API_Core.MiddleWare
                     statusCode=HttpStatusCode.BadRequest;
                     errorDetails.ErrorType = "Bad Request";
                     errorDetails.StatusCode = HttpStatusCode.BadRequest;
-                    break ;
+                    break;
+                     
 
                 default:
                     break;

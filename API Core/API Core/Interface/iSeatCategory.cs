@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace API_Core.Interface
 {
-    public interface iSeatCategory
-    {
-        public List<SeatCategoryDto> GetAsync();
-        public SeatCategoryDto GetAsyncId(int id);
-        public int CreateAsync(SeatCategoryDto model);
-        public int UpdateAsync(SeatCategoryDto model);
-        public  int DeleteAsyncId(int id);
+    public interface iSeatCategory : IGenericRepository<SeatCategory>
+    { 
     }
 }

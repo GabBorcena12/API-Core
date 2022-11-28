@@ -18,8 +18,7 @@ using System.Threading.Tasks;
 
 
 namespace API_Core.Controllers
-{
-    [NonController]
+{ 
     [ApiController]
     public class SeatCategoryController : ControllerBase
     {
@@ -38,16 +37,20 @@ namespace API_Core.Controllers
 
         }
 
-        [HttpGet]
-        //[Authorize]
+        [HttpGet] 
         [Route("api/GetSeatCategory")]
-        public ActionResult<IEnumerable<SeatCategoryDto>> GetSeatCategory()
+        public async Task<ActionResult<IList<SeatCategoryDto>>> GetSeatCategory()
         { 
             _logger.LogInformation("Get Ticket Run using Log Information");
             try
             {
-                var result = _iSeat.GetAsync();
-                return Ok(result);
+                var result = await _iSeat.GetAsync();
+                var records = _mapper.Map<List<SeatCategoryDto>>(result);
+                if (records == null)
+                {
+                    return NotFound();
+                }
+                return Ok(records);
             }
             catch (Exception ex) {
                 _logger.LogError($"Something went wrong with {nameof(GetSeatCategory)}. Error Message: {ex.Message}.");
@@ -55,41 +58,38 @@ namespace API_Core.Controllers
             }
         }
 
-        [HttpGet]
-        //[Authorize]
+        [HttpGet] 
         [Route("api/Ticket/GetSeatCategoryById/{id}")]
-        public ActionResult<SeatCategoryDto> GetSeatCategoryById(int id)
+        public async Task<ActionResult<SeatCategoryDto>> GetSeatCategoryById(int id)
         {   
 
-            var result = _iSeat.GetAsyncId(id);
-
-            if (result == null)
+            var result = await _iSeat.GetAsyncId(id);
+            var records = _mapper.Map<SeatCategoryDto>(result);
+            if (records == null)
             {
                 throw  new NotFoundException(nameof(GetSeatCategoryById),id); 
             }
 
-            return Ok(result);
+            return Ok(records);
 
         }
 
 
-        [HttpPost]
-        [Authorize(Roles = "Administrator,User")]
+        [HttpPost] 
         [Route("api/Ticket/CreateSeatCategory")]
-        public IActionResult CreateSeatCategory(SeatCategoryDto model)
+        public async Task<IActionResult> CreateSeatCategory(SeatCategoryDto model)
         {
             try
-            {
-                var result = _iSeat.CreateAsync(model);
+            { 
+                var records = _mapper.Map<SeatCategory>(model);
+                var result = await _iSeat.CreateAsync(records);
 
-                if (result > 0)
+                if (result == null)
                 {
-                    return Ok($"Category No. {result} added successfully");
+                    throw new BadRequestException(nameof(CreateSeatCategory), records.Id);
                 }
-                else
-                {
-                    throw new BadRequestException(nameof(CreateSeatCategory), model.Id); 
-                }
+
+                return Ok($"Added successfully");
 
             }
             catch (Exception ex)
@@ -102,23 +102,21 @@ namespace API_Core.Controllers
 
         }
 
-        [HttpPatch] 
-        [Authorize(Roles = "Administrator")]
+        [HttpPatch]  
         [Route("api/Ticket/UpdateSeataCategory")]
-        public IActionResult UpdateSeataCategory(SeatCategoryDto model)
+        public async Task<IActionResult> UpdateSeataCategory(SeatCategoryDto model)
         {
             try
             {
-                var result = _iSeat.UpdateAsync(model);
+                var records = _mapper.Map<SeatCategory>(model);
+                var result = await _iSeat.UpdateAsync(records);
 
-                if (result > 0)
-                {
-                    return Ok($"Category No. {model.Id} has been updated.");
+                if (result == null)
+                {                  
+                    throw new BadRequestException(nameof(UpdateSeataCategory), records.Id);
                 }
-                else
-                {
-                    throw new BadRequestException(nameof(UpdateSeataCategory), model.Id);
-                }
+
+                return Ok($"Category No. {records.Id} has been updated.");
             }
             catch (Exception ex)
             {
@@ -130,17 +128,17 @@ namespace API_Core.Controllers
 
         }
 
-        [HttpDelete]
-        [Authorize(Roles = "Administrator")]
+        [HttpDelete] 
         [Route("api/Ticket/DeleteSeatCategory/{id}")]
-        public  IActionResult DeleteSeatCategory(int id)
+        public async Task<IActionResult> DeleteSeatCategory(int id)
         {
             try
             {
-                var result = _iSeat.DeleteAsyncId(id);
-                if (result != 1)
+                await _iSeat.DeleteAsyncId(id);
+                var isExists = await _iSeat.Exists(id);
+                if (isExists)
                 {
-                    throw new NotFoundException(nameof(DeleteSeatCategory), id); 
+                    return Problem($"Ticket No. {id} has not been deleted");
                 }
 
                 return Ok($"Ticket No. {id} deleted successfully");

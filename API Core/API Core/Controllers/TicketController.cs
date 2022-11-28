@@ -20,15 +20,15 @@ using System.Threading.Tasks;
 namespace API_Core.Controllers
 {
     [ApiController]
-    public class TicketApiController : ControllerBase
+    public class TicketController : ControllerBase
     {
         private iTicket _iTicket;
 
         private readonly TicketDbContext _db;
         private readonly IMapper _mapper;
-        private readonly ILogger<TicketApiController> _logger;
+        private readonly ILogger<TicketController> _logger;
 
-        public TicketApiController(TicketDbContext db, iTicket iTicket, IMapper  mapper, ILogger<TicketApiController> logger)
+        public TicketController(TicketDbContext db, iTicket iTicket, IMapper  mapper, ILogger<TicketController> logger)
         { 
                 _db = db;
                 _iTicket = iTicket;
@@ -38,7 +38,7 @@ namespace API_Core.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         [Route("api/Ticket/GetTicket")]
         public ActionResult<IEnumerable<GetTicketDto>> GetTicket()
         { 
@@ -55,7 +55,7 @@ namespace API_Core.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         [Route("api/Ticket/GetTicketById/{id}")]
         public ActionResult<Ticket> GetTicketById(int id)
         {   
@@ -73,7 +73,7 @@ namespace API_Core.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = "Administrator,User")]
+        [Authorize(Roles = "Administrator,User")]
         [Route("api/Ticket/CreateTicket")]
         public IActionResult CreateTicket(CreateTicketDto model)
         {
@@ -83,7 +83,7 @@ namespace API_Core.Controllers
 
                 if (result > 0)
                 {
-                    return Ok($"Ticket No. {result} added successfullt");
+                    return Ok($"Ticket No. {result} added successfully");
                 }
                 else
                 {
@@ -102,7 +102,7 @@ namespace API_Core.Controllers
         }
 
         [HttpPatch] 
-        //[Authorize(Roles = "Administrator,User")]
+        [Authorize(Roles = "Administrator,User")]
         [Route("api/Ticket/UpdateTicket")]
         public IActionResult UpdateTicket(UpdateTicketDto model)
         {
@@ -130,7 +130,7 @@ namespace API_Core.Controllers
         }
 
         [HttpDelete]
-        //[Authorize(Roles = "Administrator,User")]
+        [Authorize(Roles = "Administrator,User")]
         [Route("api/Ticket/DeleteTicketById/{id}")]
         public  IActionResult DeleteTicketById(int id)
         {
