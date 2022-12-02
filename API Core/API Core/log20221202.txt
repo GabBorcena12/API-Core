@@ -1,0 +1,31 @@
+2022-12-02 13:24:05.750 +08:00 [INF] User profile is available. Using 'C:\Users\gabri\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-02 13:24:06.797 +08:00 [INF] Now listening on: https://localhost:5001
+2022-12-02 13:24:06.799 +08:00 [INF] Now listening on: http://localhost:5000
+2022-12-02 13:24:06.800 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-02 13:24:06.802 +08:00 [INF] Hosting environment: Development
+2022-12-02 13:24:06.803 +08:00 [INF] Content root path: C:\Users\gabri\OneDrive\Documents\API-Core\API Core\API Core
+2022-12-02 13:24:07.847 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/index.html  
+2022-12-02 13:24:07.975 +08:00 [INF] Request finished in 128.5398ms 200 text/html;charset=utf-8
+2022-12-02 13:24:07.979 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js  
+2022-12-02 13:24:07.989 +08:00 [INF] Request finished in 9.2967ms 200 application/javascript; charset=utf-8
+2022-12-02 13:24:08.000 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_vs/browserLink  
+2022-12-02 13:24:08.035 +08:00 [INF] Request finished in 34.9981ms 200 text/javascript; charset=UTF-8
+2022-12-02 13:24:08.085 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json  
+2022-12-02 13:24:08.107 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/favicon-32x32.png  
+2022-12-02 13:24:08.122 +08:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2022-12-02 13:24:08.124 +08:00 [INF] Request finished in 17.0455ms 200 image/png
+2022-12-02 13:24:08.171 +08:00 [INF] Request finished in 86.4646ms 200 application/json;charset=utf-8
+2022-12-02 13:24:49.830 +08:00 [INF] User profile is available. Using 'C:\Users\gabri\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-02 13:24:50.487 +08:00 [INF] Now listening on: https://localhost:5001
+2022-12-02 13:24:50.490 +08:00 [INF] Now listening on: http://localhost:5000
+2022-12-02 13:24:50.492 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-02 13:24:50.493 +08:00 [INF] Hosting environment: Development
+2022-12-02 13:24:50.495 +08:00 [INF] Content root path: C:\Users\gabri\OneDrive\Documents\API-Core\API Core\API Core
+2022-12-02 13:24:51.302 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/index.html  
+2022-12-02 13:24:51.391 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js  
+2022-12-02 13:24:51.393 +08:00 [INF] Request finished in 92.667ms 200 text/html;charset=utf-8
+2022-12-02 13:24:51.396 +08:00 [INF] Request finished in 4.9814ms 200 application/javascript; charset=utf-8
+2022-12-02 13:24:51.411 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_vs/browserLink  
+2022-12-02 13:24:51.425 +08:00 [INF] Request finished in 13.4941ms 200 text/javascript; charset=UTF-8
+2022-12-02 13:24:51.494 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json  
+2022-12-02 13:24:51.580 +08:00 [INF] Request finished in 86.0558ms 200 application/json;charset=utf-8

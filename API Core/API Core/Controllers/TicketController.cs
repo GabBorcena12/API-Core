@@ -43,6 +43,7 @@ namespace API_Core.Controllers
         public ActionResult<IEnumerable<GetTicketDto>> GetTicket()
         { 
             _logger.LogInformation("Get Ticket Run using Log Information");
+            
             try
             {
                 var result = _iTicket.GetAsync();
@@ -152,6 +153,21 @@ namespace API_Core.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/Ticket/GetTicketUsingSP/{id}")]
+        public async Task<ActionResult<Ticket>> GetTicketUsingSP(int id)
+        {
+            var result = "";
+
+            if (result == null)
+            {
+
+                return NotFound($"Ticket No. {id} cannot be found.");
+            }
+
+            return Ok(result);
+
+        }
         /////////////////////////////Async////////////////////////////////////////
         [NonAction]
         [HttpGet]

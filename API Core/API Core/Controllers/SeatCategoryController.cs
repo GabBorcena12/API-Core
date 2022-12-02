@@ -18,8 +18,10 @@ using System.Threading.Tasks;
 
 
 namespace API_Core.Controllers
-{ 
+{
+    
     [ApiController]
+    [NonController]
     public class SeatCategoryController : ControllerBase
     {
         private iSeatCategory _iSeat;
