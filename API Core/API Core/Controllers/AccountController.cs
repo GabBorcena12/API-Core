@@ -17,7 +17,7 @@ namespace API_Core.Controllers
         {
             this._authManager = authManager;
         }
-
+        //fromm test push
         //api/account/register
         [HttpPost]
         [Route("register")]
