@@ -1,0 +1,14 @@
+2022-12-03 21:30:30.936 +08:00 [INF] User profile is available. Using 'C:\Users\gabri\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-12-03 21:30:31.399 +08:00 [INF] Now listening on: https://localhost:5001
+2022-12-03 21:30:31.401 +08:00 [INF] Now listening on: http://localhost:5000
+2022-12-03 21:30:31.403 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-12-03 21:30:31.404 +08:00 [INF] Hosting environment: Development
+2022-12-03 21:30:31.406 +08:00 [INF] Content root path: C:\Users\gabri\OneDrive\Documents\API-Core\API Core\API Core
+2022-12-03 21:30:32.451 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/index.html  
+2022-12-03 21:30:32.614 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js  
+2022-12-03 21:30:32.615 +08:00 [INF] Request finished in 164.6652ms 200 text/html;charset=utf-8
+2022-12-03 21:30:32.627 +08:00 [INF] Request finished in 13.3216ms 200 application/javascript; charset=utf-8
+2022-12-03 21:30:32.657 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_vs/browserLink  
+2022-12-03 21:30:32.703 +08:00 [INF] Request finished in 46.5494ms 200 text/javascript; charset=UTF-8
+2022-12-03 21:30:32.789 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json  
+2022-12-03 21:30:32.876 +08:00 [INF] Request finished in 87.1733ms 200 application/json;charset=utf-8

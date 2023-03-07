@@ -1,0 +1,27 @@
+2023-02-13 14:06:43.999 +08:00 [INF] User profile is available. Using 'C:\Users\gabri\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-02-13 14:06:44.976 +08:00 [INF] Now listening on: https://localhost:5001
+2023-02-13 14:06:44.979 +08:00 [INF] Now listening on: http://localhost:5000
+2023-02-13 14:06:44.981 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-02-13 14:06:44.982 +08:00 [INF] Hosting environment: Development
+2023-02-13 14:06:44.984 +08:00 [INF] Content root path: C:\Users\gabri\OneDrive\Documents\API-Core\API Core\API Core
+2023-02-13 14:06:46.260 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/index.html  
+2023-02-13 14:06:46.476 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js  
+2023-02-13 14:06:46.482 +08:00 [INF] Request finished in 227.6007ms 200 text/html;charset=utf-8
+2023-02-13 14:06:46.486 +08:00 [INF] Request finished in 10.1241ms 200 application/javascript; charset=utf-8
+2023-02-13 14:06:46.516 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_vs/browserLink  
+2023-02-13 14:06:46.579 +08:00 [INF] Request finished in 62.9211ms 200 text/javascript; charset=UTF-8
+2023-02-13 14:06:46.795 +08:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json  
+2023-02-13 14:06:46.938 +08:00 [INF] Request finished in 143.3301ms 200 application/json;charset=utf-8
+2023-02-13 14:07:21.599 +08:00 [INF] Request starting HTTP/2 POST https://localhost:5001/api/Account/login application/json-patch+json 60
+2023-02-13 14:07:21.604 +08:00 [INF] CORS policy execution successful.
+2023-02-13 14:07:21.790 +08:00 [INF] Executing endpoint 'API_Core.Controllers.AccountController.login (API Core)'
+2023-02-13 14:07:21.821 +08:00 [INF] Route matched with {action = "login", controller = "Account"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] login(API_Core.Model.Data_Transfer_Objects.LoginDto) on controller API_Core.Controllers.AccountController (API Core).
+2023-02-13 14:07:22.502 +08:00 [INF] Entity Framework Core 5.0.17 initialized 'TicketDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: MaxPoolSize=128 
+2023-02-13 14:07:23.005 +08:00 [INF] Executed DbCommand (42ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[FirstName], [a].[LastName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[MiddleName], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2023-02-13 14:07:23.024 +08:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2023-02-13 14:07:23.063 +08:00 [INF] Executed action API_Core.Controllers.AccountController.login (API Core) in 1234.5294ms
+2023-02-13 14:07:23.065 +08:00 [INF] Executed endpoint 'API_Core.Controllers.AccountController.login (API Core)'
+2023-02-13 14:07:23.074 +08:00 [INF] Request finished in 1475.9367ms 401 application/problem+json; charset=utf-8
